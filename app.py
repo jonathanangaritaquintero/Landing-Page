@@ -14,16 +14,16 @@ STUDIO_CONFIG = {
     "studio_name": "Certified Tattoo Studio",
     "artist_name": "Jonty  Angarita",
     "title": "TATTOO ARTIST",
-    "main_message": "¿Deseas tatuarte y estas en Medellin?",
+    "main_message": "¿Deseas tatuarte y estás en Medellín?",
     "submessage": "AGENDA UNA ASESORÍA TOTALMENTE GRATIS",
     
-    "final_message": "¡Convierte tu cuerpo en lo que tu Imagen quiere reflejar!",
+    "final_message": "¡Convierte tu cuerpo en la imagen que quieres reflejar!",
     "hero_video": "https://res.cloudinary.com/dweqlnl1w/video/upload/v1756169279/copy_87684891-94AE-4CF6-9E2C-4A9BCD183822_yohijq.mov",  # Tu video aquí
     "instagram_handle": "@jontyangarita",
     "instagram_url": "https://www.instagram.com/jontyangarita?igsh=MXdqOXlpeG9pZTRmZA%3D%3D&utm_source=qr",
     "whatsapp_number": "+573504556466",  # Cambiar por número real
     "location": "Medellín, Antioquia",
-    "about_text": "Soy Jonty Angarita, Artista Tatuador actualmente radicado en la ciudad de Medellín-Colombia, cuento con +10 años de experiencia en el arte del tatuaje y me especializo en los estilos de Realismo, Color, Sombras, y Ornamentales. En estos largos años he tenido la oportunidad de trabajar con clientes nacionales e internacionales, logrando así un portafolio amplio y variado. Mi objetivo es brindar a cada cliente una experiencia única y personalizada, asegurándome de que cada tatuaje sea una obra de arte que refleje su individualidad y estilo personal. Si estás buscando un tatuaje que combine técnica, creatividad y pasión, no dudes en contactarme para agendar tu cita o asesoría gratuita.",
+    "about_text": "Soy Jonty Angarita, Artista Tatuador radicado en la ciudad de Medellín-Colombia, cuento con +10 años de experiencia como tatuador y me especializo en los estilos de Realismo, Color, Sombras, y Ornamentales. En estos largos años he tenido la oportunidad de trabajar con clientes nacionales e internacionales, logrando así un portafolio amplio y variado. Mi objetivo es brindar a cada cliente una experiencia única y personalizada, asegurándome de que cada tatuaje sea una obra de arte que refleje su individualidad y estilo personal. Si estás buscando un tatuaje que combine técnica, creatividad y pasión, no dudes en contactarme para agendar tu cita o asesoría gratuita.",
     "google_maps_embed": "Tattoo Shop Medellin / Jonty Angarita",
     "google_ads_id": "G-LLX2T252FL",
     
@@ -86,7 +86,7 @@ HTML_TEMPLATE = '''
     
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="{{ config.artist_name }} - {{ config.title }}">
-    <meta property="og:description" content="Especialista en realismo, color y fine line. Agenda tu asesoría completamente Gratis.">
+    <meta property="og:description" content="Especialista en realismo, color y ornamental. Agenda tu asesoría completamente Gratis.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://picsum.photos/1200/630?random=100">
     
@@ -105,7 +105,7 @@ HTML_TEMPLATE = '''
     
     :root {
         /* Paleta de colores Jonty Angarita INVERTIDA - MÁS NEGROS */
-        --orange-primary: #FF6B35;
+        --orange-primary: #FF4B35;
         --orange-hover: #e55a2b;
         --orange-light: #ff8660;
         --bg-dark: #1a1a1a;      /* MÁS NEGRO (era #f5f5f5) */
@@ -483,7 +483,7 @@ HTML_TEMPLATE = '''
     }
     
     /* ========================================
-       SOBRE MÍ SECTION
+       SOBRE EL ARTISTA SECTION
        ======================================== */
     .about-section {
         background: var(--orange-primary);
@@ -824,7 +824,7 @@ HTML_TEMPLATE = '''
     <nav class="mobile-menu" id="mobileMenu">
         <a href="#inicio" class="mobile-menu-item">Inicio</a>
         <a href="#estilos" class="mobile-menu-item">Mi Portafolio</a>
-        <a href="#sobre-mi" class="mobile-menu-item">Sobre mí</a>
+        <a href="#sobre-mi" class="mobile-menu-item">Sobre el Artista</a>
         <a href="#contacto" class="mobile-menu-item">Contacto</a>
         <a href="{{ config.instagram_url }}" target="_blank" class="mobile-menu-item mobile-menu-instagram">
             <i class="fab fa-instagram"></i>
@@ -855,7 +855,7 @@ HTML_TEMPLATE = '''
     </section>
 
     <!-- ========================================
-         ESTILOS DE TATUAJES
+         MI PORTAFOLIO
          ======================================== -->
     <section class="styles-section" id="estilos">
         <div class="section-container">
@@ -877,12 +877,12 @@ HTML_TEMPLATE = '''
     </section>
 
     <!-- ========================================
-         SOBRE MÍ
+         SOBRE EL ARTISTA
          ======================================== -->
-    <section class="about-section" id="sobre-mi">
+    <section class="about-section" id="sobre-el-artista">
         <div class="about-container">
             <div class="about-content">
-                <h2>SOBRE MÍ</h2>
+                <h2>SOBRE EL ARTISTA</h2>
                 <p class="about-text">{{ config.about_text }}</p>
                 <button class="about-button" onclick="openInstagram()">
                     AGENDA AHORA
@@ -912,13 +912,13 @@ HTML_TEMPLATE = '''
     </section>
 
     <!-- ========================================
-         RESEÑAS Y OPINIONES
+         REVIEWS Y OPINIONES
          ======================================== -->
     <section class="reviews-section">
         <div class="section-container">
-            <h2 class="reviews-title">RESEÑAS Y OPINIONES</h2>
-            <p class="reviews-subtitle">DESCUBRE LO QUE OPINAN MIS CLIENTES</p>
-            <p class="reviews-text">Puedes ver más reseñas reales en Google Maps y conoce sus experiencias</p>
+            <h2 class="reviews-title">REVIEWS Y OPINIONES</h2>
+            <p class="reviews-subtitle">CONOCE LA OPINIÓN DE MIS CLIENTES</p>
+            <p class="reviews-text">Puedes ver más opiniones reales y conocer sus experiencias (Pregunta las dudas que tengas!) </p>
             <div class="stars">
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>
@@ -927,7 +927,7 @@ HTML_TEMPLATE = '''
                 <i class="fas fa-star"></i>
             </div>
             <a href="https://maps.app.goo.gl/5tutFQQHQfYuxmRc7" target="_blank" class="reviews-button">
-                HAZ CLIC AQUÍ PARA VER RESEÑAS
+                HAZ CLIC AQUÍ PARA VER TODAS
             </a>
         </div>
     </section>
@@ -940,7 +940,7 @@ HTML_TEMPLATE = '''
             <div class="footer-links">
                 <a href="#inicio">Inicio</a>
                 <a href="#estilos">Mi Portafolio</a>
-                <a href="#sobre-mi">Sobre mí</a>
+                <a href="#sobre-el-artista">Sobre el Artista</a>
             </div>
             <div class="footer-social">
                 <a href="{{ config.instagram_url }}" target="_blank">
