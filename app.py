@@ -85,11 +85,11 @@ HTML_TEMPLATE = '''
     <meta name="keywords" content="tatuajes, {{ config.location.lower() }}, realismo, color, ornamentales, artista tatuador">
     
     <!-- Open Graph Meta Tags PERSONALIZADOS -->
-    <meta property="og:title" content="Jonty Angarita - Tattoo Artist Medellín">
+    <meta property="og:title" content="Jonty Angarita - Tattoo Artist Medellín | Realismo y Color">
     <meta property="og:description" content="Especialista en realismo, color, sombras y ornamentales. +10 años de experiencia. Agenda tu asesoría completamente GRATIS en Medellín.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://tu-app.onrender.com">
-    <meta property="og:image" content="https://res.cloudinary.com/dweqlnl1w/image/upload/v1756162692/image00007_hs638b.jpg">
+    <meta property="og:url" content="https://jontyangaritatattooshop.onrender.com">
+    <meta property="og:image" content="https://res.cloudinary.com/dweqlnl1w/image/upload/v1756247744/image00007_qv0o5c.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:site_name" content="Top Artists Medellin">
@@ -97,12 +97,12 @@ HTML_TEMPLATE = '''
 
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Jonty Angarita - Tattoo Artist Medellín">
+    <meta name="twitter:title" content="Jonty Angarita - Tattoo Artist Medellín | Realismo y Color">
     <meta name="twitter:description" content="Especialista en realismo, color, sombras y ornamentales. +10 años de experiencia. Agenda tu asesoría completamente GRATIS.">
-    <meta name="twitter:image" content="https://res.cloudinary.com/dweqlnl1w/image/upload/v1756162692/image00007_hs638b.jpg">
+    <meta name="twitter:image" content="https://res.cloudinary.com/dweqlnl1w/image/upload/v1756247744/image00007_qv0o5c.jpg">
 
     <!-- WhatsApp específico -->
-    <meta property="og:image:alt" content="Jonty Angarita - Tattoo Artist en Medellín">
+    <meta property="og:image:alt" content="Jonty Angarita - Tattoo Artist Medellín | Realismo y Color">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
