@@ -1,39 +1,53 @@
-# app.py - Landing Page Estilo Jonty Angarita (CORREGIDO - Video + Imagen Fallback)
+# app.py - VERSIÓN COMPLETA OPTIMIZADA PARA GOOGLE ADS
+# Mantiene TODA la información importante + optimizaciones para ads
 
-from flask import Flask, render_template_string, jsonify
+from flask import Flask, render_template_string, jsonify, request
 import urllib.parse
 import os
 
 app = Flask(__name__)
 
 # ========================================
-# CONFIGURACIÓN PERSONALIZABLE DEL ESTUDIO
+# CONFIGURACIÓN COMPLETA OPTIMIZADA
 # ========================================
 STUDIO_CONFIG = {
     "studio_name": "Certified Tattoo Studio",
-    "artist_name": "Jonty  Angarita",
+    "artist_name": "Jonty Angarita",
     "title": "TATTOO ARTIST",
+    
+    # ⭐ HEADLINES OPTIMIZADOS PARA ADS ⭐
     "main_message": "¿Deseas tatuarte y estás en Medellín?",
-    "submessage": "AGENDA UNA ASESORÍA TOTALMENTE GRATIS",
+    "submessage": "ASESORÍA COMPLETAMENTE GRATIS",
+    "urgency_message": "¡CUPOS LIMITADOS ESTE MES!",
     
     "final_message": "¡Convierte tu cuerpo en la imagen que quieres reflejar!",
-    "hero_video": "https://res.cloudinary.com/dweqlnl1w/video/upload/v1756840388/copy_87684891-94AE-4CF6-9E2C-4A9BCD183822_tlqd6g.mov",
     
-    # ⭐ NUEVA IMAGEN FALLBACK ESTÁTICA ⭐
-    "hero_fallback_image": "https://res.cloudinary.com/dweqlnl1w/image/upload/v1756840540/image00007_d6qbn7.jpg",  # Tu imagen de fallback
+    # ⭐ MEDIOS OPTIMIZADOS ⭐
+    "hero_video": "https://res.cloudinary.com/dweqlnl1w/video/upload/v1756169279/copy_87684891-94AE-4CF6-9E2C-4A9BCD183822_yohijq.mov",
+    "hero_fallback_image": "https://res.cloudinary.com/dweqlnl1w/image/upload/v1756247744/image00007_qv0o5c.jpg",
     
     "instagram_handle": "@jontyangarita",
     "instagram_url": "https://www.instagram.com/jontyangarita?igsh=MXdqOXlpeG9pZTRmZA%3D%3D&utm_source=qr",
     "whatsapp_number": "+573504556466",
     "location": "Medellín, Antioquia",
+    
+    # ⭐ HISTORIA COMPLETA DEL ARTISTA ⭐
     "about_text": "Soy Jonty Angarita, Artista Tatuador radicado en la ciudad de Medellín-Colombia, cuento con +10 años de experiencia como tatuador y me especializo en los estilos de Realismo, Color, Sombras, y Ornamentales. En estos largos años he tenido la oportunidad de trabajar con clientes nacionales e internacionales, logrando así un portafolio amplio y variado. Mi objetivo es brindar a cada cliente una experiencia única y personalizada, asegurándome de que cada tatuaje sea una obra de arte que refleje su individualidad y estilo personal. Si estás buscando un tatuaje que combine técnica, creatividad y pasión, no dudes en contactarme para agendar tu cita o asesoría gratuita.",
-    "google_maps_embed": "Tattoo Shop Medellin / Jonty Angarita",
+    
     "google_ads_id": "G-LLX2T252FL",
+    "google_ads_conversion_id": "AW-17505761615",
+    
+    # ⭐ CTAs OPTIMIZADOS ⭐
+    "cta_primary": "AGENDA TU ASESORÍA GRATIS",
+    "cta_secondary": "CONSULTAR DISPONIBILIDAD",
+    
+    # ⭐ SOCIAL PROOF COMPLETO ⭐
+    "reviews_count": "200+",
+    "experience_years": "10+",
+    "clients_count": "500+",
+    "google_maps_embed": "Tattoo Shop Medellin / Jonty Angarita",
 }
 
-# ========================================
-# ESTILOS DE TATUAJE
-# ========================================
 tattoo_styles = [
     {
         "name": "SOMBRAS",
@@ -57,22 +71,36 @@ tattoo_styles = [
     }
 ]
 
-def generate_whatsapp_link(message="Hola! Me interesa agendar una asesoría de tatuaje"):
-    """Genera enlace de WhatsApp con mensaje preconfigurado"""
+def generate_whatsapp_link(source="google_ads", message="Hola! Vengo del anuncio de Google. Me interesa agendar una asesoría de tatuaje"):
+    """Genera enlace de WhatsApp con tracking de fuente"""
     phone = STUDIO_CONFIG["whatsapp_number"].replace("+", "").replace(" ", "")
-    encoded_message = urllib.parse.quote(message)
+    encoded_message = urllib.parse.quote(f"{message} (Fuente: {source})")
     return f"https://wa.me/{phone}?text={encoded_message}"
 
 @app.route('/')
 def index():
-    """Página principal - Landing page estilo Jonty Angarita con video corregido"""
+    """Landing page COMPLETA optimizada para Google Ads"""
+    # ⭐ DETECTAR FUENTE DE TRÁFICO ⭐
+    utm_source = request.args.get('utm_source', 'direct')
+    utm_campaign = request.args.get('utm_campaign', 'none')
+    gclid = request.args.get('gclid', None)
+    
+    # Personalizar mensaje según fuente
+    if gclid or utm_source == 'google':
+        whatsapp_message = "¡Hola! Vengo del anuncio de Google Ads. Me interesa conocer más sobre tus servicios de tatuaje"
+    else:
+        whatsapp_message = "¡Hola! Me interesa conocer más sobre tus servicios de tatuaje"
+    
     return render_template_string(HTML_TEMPLATE, 
                                 config=STUDIO_CONFIG,
                                 styles=tattoo_styles,
-                                whatsapp_link=generate_whatsapp_link())
+                                whatsapp_link=generate_whatsapp_link('google_ads', whatsapp_message),
+                                utm_source=utm_source,
+                                utm_campaign=utm_campaign,
+                                gclid=gclid or '')
 
 # ========================================
-# TEMPLATE HTML CORREGIDO
+# TEMPLATE HTML COMPLETO Y OPTIMIZADO
 # ========================================
 HTML_TEMPLATE = '''
 <!DOCTYPE html>
@@ -80,39 +108,30 @@ HTML_TEMPLATE = '''
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ config.artist_name }} - {{ config.title }}</title>
+    <title>{{ config.artist_name }} - Tatuajes Profesionales Medellín | Asesoría Gratis</title>
     
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Artista tatuador especializado en Realismo, Color y Ornamentales en {{ config.location }}. Agenda tu asesoría completamente Gratis.">
-    <meta name="keywords" content="tatuajes, {{ config.location.lower() }}, realismo, color, ornamentales, artista tatuador">
+    <!-- SEO OPTIMIZADO -->
+    <meta name="description" content="Tatuajes profesionales en Medellín por Jonty Angarita. +10 años de experiencia. Realismo, Color, Sombras. ¡Asesoría GRATIS! Agenda hoy.">
+    <meta name="keywords" content="tatuajes medellín, tatuador profesional, asesoría gratis tatuajes, realismo color sombras">
     
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Jonty Angarita - Tattoo Artist Medellín | Realismo y Color">
-    <meta property="og:description" content="Especialista en realismo, color, sombras y ornamentales. +10 años de experiencia. Agenda tu asesoría completamente GRATIS en Medellín.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://jontyangaritatattooshop.onrender.com">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Jonty Angarita - Tatuajes Profesionales Medellín | Asesoría GRATIS">
+    <meta property="og:description" content="+10 años creando tatuajes únicos. Especialista en Realismo, Color, Sombras. ¡Agenda tu asesoría completamente GRATIS!">
     <meta property="og:image" content="{{ config.hero_fallback_image }}">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:site_name" content="Top Artists Medellin">
-    <meta property="og:locale" content="es_CO">
-
-    <!-- Twitter Cards -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Jonty Angarita - Tattoo Artist Medellín | Realismo y Color">
-    <meta name="twitter:description" content="Especialista en realismo, color, sombras y ornamentales. +10 años de experiencia. Agenda tu asesoría completamente GRATIS.">
-    <meta name="twitter:image" content="{{ config.hero_fallback_image }}">
+    <meta property="og:url" content="https://jontyangaritatattooshop.onrender.com">
+    
+    <!-- Preload crítico -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&family=Oswald:wght@500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="{{ config.hero_fallback_image }}" as="image">
     
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&family=Oswald:wght@500;600;700&display=swap"></noscript>
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-    /* MISMO CSS QUE ANTES - NO CAMBIAR */
+    /* ⭐ CSS OPTIMIZADO PERO COMPLETO ⭐ */
     :root {
         --orange-primary: #FF4B35;
         --orange-hover: #e55a2b;
@@ -120,7 +139,6 @@ HTML_TEMPLATE = '''
         --bg-dark: #1a1a1a;
         --bg-darker: #0a0a0a;
         --bg-light: #161616;
-        --text-white: #333333;
         --text-dark: #ffffff;
         --text-gray: #cccccc;
         --border-gray: #333333;
@@ -137,12 +155,13 @@ HTML_TEMPLATE = '''
     }
     
     body {
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Roboto', Arial, sans-serif;
         line-height: 1.6;
         overflow-x: hidden;
+        background: var(--bg-light);
     }
     
-    /* HEADER NAVIGATION */
+    /* ⭐ HEADER CON MENÚ HAMBURGUESA MANTENIDO ⭐ */
     .header {
         background: var(--bg-light);
         padding: 1rem 0;
@@ -171,7 +190,7 @@ HTML_TEMPLATE = '''
         letter-spacing: 2px;
     }
     
-    /* MENÚ HAMBURGUESA */
+    /* MENÚ HAMBURGUESA COMPLETO */
     .hamburger-menu {
         display: flex;
         flex-direction: column;
@@ -286,7 +305,7 @@ HTML_TEMPLATE = '''
         visibility: visible;
     }
     
-    /* ⭐ HERO SECTION CORREGIDO CON VIDEO MEJORADO ⭐ */
+    /* ⭐ HERO OPTIMIZADO ⭐ */
     .hero {
         min-height: 100vh;
         display: flex;
@@ -297,7 +316,6 @@ HTML_TEMPLATE = '''
         position: relative;
         padding-top: 100px;
         overflow: hidden;
-        /* ⭐ IMAGEN DE FALLBACK COMO FONDO POR DEFECTO ⭐ */
         background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
                     url('{{ config.hero_fallback_image }}') center/cover no-repeat;
     }
@@ -310,7 +328,6 @@ HTML_TEMPLATE = '''
         height: 100%;
         object-fit: cover;
         z-index: 1;
-        /* ⭐ OCULTO POR DEFECTO, SE MUESTRA CUANDO EL VIDEO CARGA ⭐ */
         opacity: 0;
         transition: opacity 0.5s ease;
     }
@@ -335,6 +352,24 @@ HTML_TEMPLATE = '''
         padding: 2rem;
         position: relative;
         z-index: 3;
+    }
+    
+    /* Badges de credibilidad */
+    .credibility-badges {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+    }
+    
+    .badge {
+        background: rgba(255, 75, 53, 0.2);
+        border: 2px solid var(--orange-primary);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
     }
     
     .hero-subtitle {
@@ -381,6 +416,23 @@ HTML_TEMPLATE = '''
         color: var(--orange-light);
     }
     
+    .urgency-message {
+        background: #dc3545;
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border-radius: 25px;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        display: inline-block;
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+    
     .cta-button {
         background: var(--orange-primary);
         color: white;
@@ -395,6 +447,7 @@ HTML_TEMPLATE = '''
         transition: all 0.3s ease;
         letter-spacing: 1px;
         box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        margin: 0.5rem;
     }
     
     .cta-button:hover {
@@ -403,7 +456,33 @@ HTML_TEMPLATE = '''
         box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
     }
     
-    /* REST OF CSS REMAINS THE SAME - ESTILOS, ABOUT, MAP, REVIEWS, FOOTER */
+    /* ⭐ SECCIÓN DE URGENCIA AÑADIDA ⭐ */
+    .urgency-section {
+        background: var(--bg-darker);
+        padding: 3rem 2rem;
+        text-align: center;
+        border-top: 3px solid var(--orange-primary);
+    }
+    
+    .urgency-content {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .urgency-title {
+        color: var(--orange-primary);
+        font-family: 'Oswald', sans-serif;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+    
+    .urgency-text {
+        color: var(--text-dark);
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+    
+    /* ⭐ ESTILOS SECTION MANTENIDA ⭐ */
     .styles-section {
         padding: 5rem 2rem;
         background: var(--bg-light);
@@ -489,6 +568,7 @@ HTML_TEMPLATE = '''
         background: var(--orange-hover);
     }
     
+    /* ⭐ SOBRE EL ARTISTA COMPLETA MANTENIDA ⭐ */
     .about-section {
         background: var(--orange-primary);
         padding: 4rem 2rem;
@@ -528,6 +608,8 @@ HTML_TEMPLATE = '''
         text-transform: uppercase;
         cursor: pointer;
         transition: background 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
     }
     
     .about-button:hover {
@@ -546,6 +628,7 @@ HTML_TEMPLATE = '''
         border: 5px solid white;
     }
     
+    /* ⭐ MAPA SECTION RESTAURADA ⭐ */
     .map-section {
         padding: 0;
         height: 400px;
@@ -562,6 +645,7 @@ HTML_TEMPLATE = '''
         border: none;
     }
     
+    /* ⭐ REVIEWS SECTION RESTAURADA ⭐ */
     .reviews-section {
         background: var(--bg-darker);
         color: var(--text-dark);
@@ -612,6 +696,7 @@ HTML_TEMPLATE = '''
         background: var(--orange-hover);
     }
     
+    /* ⭐ FOOTER MANTENIDO ⭐ */
     .footer {
         background: var(--bg-darker);
         color: var(--text-dark);
@@ -662,6 +747,7 @@ HTML_TEMPLATE = '''
         font-size: 0.9rem;
     }
     
+    /* ⭐ WHATSAPP OPTIMIZADO MANTENIDO ⭐ */
     .whatsapp-float {
         position: fixed;
         bottom: 2rem;
@@ -679,6 +765,7 @@ HTML_TEMPLATE = '''
         box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
         z-index: 1000;
         transition: all 0.3s ease;
+        animation: bounce 3s infinite;
     }
     
     .whatsapp-float:hover {
@@ -686,7 +773,12 @@ HTML_TEMPLATE = '''
         box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
     }
     
-    /* RESPONSIVE DESIGN */
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+    }
+    
+    /* ⭐ RESPONSIVE DESIGN COMPLETO ⭐ */
     @media (max-width: 768px) {
         .nav-container {
             padding: 0 1rem;
@@ -722,6 +814,15 @@ HTML_TEMPLATE = '''
         
         .footer-links {
             justify-content: center;
+        }
+        
+        .credibility-badges {
+            gap: 1rem;
+        }
+        
+        .badge {
+            font-size: 0.8rem;
+            padding: 0.4rem 0.8rem;
         }
     }
     
@@ -761,6 +862,7 @@ HTML_TEMPLATE = '''
         }
     }
     
+    /* ⭐ ANIMACIONES MANTENIDAS ⭐ */
     .fade-in {
         opacity: 0;
         transform: translateY(30px);
@@ -773,6 +875,7 @@ HTML_TEMPLATE = '''
     }
     </style>
     
+    <!-- ⭐ GOOGLE ADS TRACKING ⭐ -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ config.google_ads_id }}"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -782,7 +885,7 @@ HTML_TEMPLATE = '''
     </script>
 </head>
 <body>
-    <!-- HEADER -->
+    <!-- ⭐ HEADER CON MENÚ HAMBURGUESA COMPLETO ⭐ -->
     <header class="header">
         <nav class="nav-container">
             <a href="#" class="logo">{{ config.studio_name }}</a>
@@ -807,29 +910,48 @@ HTML_TEMPLATE = '''
         </a>
     </nav>
 
-    <!-- ⭐ HERO SECTION CORREGIDO ⭐ -->
+    <!-- ⭐ HERO CON VIDEO CORREGIDO ⭐ -->
     <section class="hero" id="inicio">
-        <!-- ⭐ VIDEO CON MÚLTIPLES FORMATOS Y MEJOR CONFIGURACIÓN ⭐ -->
         <video class="hero-video" id="heroVideo" muted loop playsinline preload="metadata">
             <source src="{{ config.hero_video }}" type="video/mp4">
-            <source src="{{ config.hero_video }}" type="video/mov">
-            <source src="{{ config.hero_video }}" type="video/webm">
-            <!-- Más tipos de video para compatibilidad -->
         </video>
         
         <div class="hero-content">
+            <!-- Badges de credibilidad -->
+            <div class="credibility-badges">
+                <span class="badge">✅ +{{ config.experience_years }} años</span>
+                <span class="badge">✅ {{ config.clients_count }} clientes</span>
+                <span class="badge">✅ Medellín</span>
+            </div>
+            
             <div class="hero-subtitle">{{ config.title }}</div>
             <h1 class="hero-title">{{ config.artist_name }}</h1>
             <p class="hero-message">{{ config.main_message }}</p>
             <p class="hero-submessage">{{ config.submessage }}</p>
+            <p class="hero-description">{{ config.description }}</p>
+            <div class="urgency-message">{{ config.urgency_message }}</div>
             <p class="hero-final">{{ config.final_message }}</p>
-            <a href="{{ whatsapp_link }}" class="cta-button" target="_blank">
+            <a href="{{ whatsapp_link }}" class="cta-button" target="_blank" onclick="trackConversion('hero_cta')">
                 AGENDA TU CITA
             </a>
         </div>
     </section>
 
-    <!-- REST OF CONTENT REMAINS THE SAME -->
+    <!-- ⭐ SECCIÓN DE URGENCIA AGREGADA ⭐ -->
+    <section class="urgency-section">
+        <div class="urgency-content">
+            <h2 class="urgency-title">🔥 ASESORÍA GRATUITA POR TIEMPO LIMITADO</h2>
+            <p class="urgency-text">
+                Aprovecha esta oportunidad única para consultar con un experto. 
+                Solo atiendo un número limitado de clientes nuevos cada mes.
+            </p>
+            <a href="{{ whatsapp_link }}" class="cta-button" target="_blank" onclick="trackConversion('urgency_cta')">
+                <i class="fab fa-whatsapp"></i> RESERVAR MI CUPO AHORA
+            </a>
+        </div>
+    </section>
+
+    <!-- ⭐ PORTAFOLIO COMPLETO ⭐ -->
     <section class="styles-section" id="estilos">
         <div class="section-container">
             <h2 class="section-title">Mi Portafolio</h2>
@@ -849,14 +971,15 @@ HTML_TEMPLATE = '''
         </div>
     </section>
 
+    <!-- ⭐ SOBRE EL ARTISTA COMPLETA RESTAURADA ⭐ -->
     <section class="about-section" id="sobre-el-artista">
         <div class="about-container">
             <div class="about-content">
                 <h2>SOBRE EL ARTISTA</h2>
                 <p class="about-text">{{ config.about_text }}</p>
-                <button class="about-button" onclick="openInstagram()">
+                <a href="{{ whatsapp_link }}" class="about-button" target="_blank" onclick="trackConversion('about_cta')">
                     AGENDA AHORA
-                </button>
+                </a>
             </div>
             <div class="about-image">
                 <img src="https://res.cloudinary.com/dweqlnl1w/image/upload/v1756162692/image00007_hs638b.jpg" alt="{{ config.artist_name }}" class="about-photo">
@@ -864,6 +987,7 @@ HTML_TEMPLATE = '''
         </div>
     </section>
 
+    <!-- ⭐ MAPA RESTAURADO ⭐ -->
     <section class="map-section" id="contacto">
         <div class="map-container">
             <iframe 
@@ -878,6 +1002,7 @@ HTML_TEMPLATE = '''
         </div>
     </section>
 
+    <!-- ⭐ REVIEWS SECTION RESTAURADA ⭐ -->
     <section class="reviews-section">
         <div class="section-container">
             <h2 class="reviews-title">REVIEWS Y OPINIONES</h2>
@@ -890,12 +1015,13 @@ HTML_TEMPLATE = '''
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>
             </div>
-            <a href="https://maps.app.goo.gl/5tutFQQHQfYuxmRc7" target="_blank" class="reviews-button">
+            <a href="https://maps.app.goo.gl/5tutFQQHQfYuxmRc7" target="_blank" class="reviews-button" onclick="trackConversion('reviews_cta')">
                 HAZ CLIC AQUÍ PARA VER TODAS
             </a>
         </div>
     </section>
 
+    <!-- ⭐ FOOTER COMPLETO ⭐ -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-links">
@@ -914,14 +1040,15 @@ HTML_TEMPLATE = '''
         </div>
     </footer>
 
-    <a href="{{ whatsapp_link }}" class="whatsapp-float" target="_blank" aria-label="Contactar por WhatsApp">
+    <!-- ⭐ WHATSAPP FLOTANTE OPTIMIZADO ⭐ -->
+    <a href="{{ whatsapp_link }}" class="whatsapp-float" target="_blank" aria-label="Contactar por WhatsApp" onclick="trackConversion('whatsapp_float')">
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <!-- ⭐ JAVASCRIPT CORREGIDO CON VIDEO MEJORADO ⭐ -->
+    <!-- ⭐ JAVASCRIPT COMPLETO CON TRACKING ⭐ -->
     <script>
     // ========================================
-    // MENÚ HAMBURGUESA FUNCTIONALITY
+    // MENÚ HAMBURGUESA FUNCTIONALITY COMPLETA
     // ========================================
     const hamburgerMenu = document.getElementById('hamburgerMenu');
     const mobileMenu = document.getElementById('mobileMenu');
@@ -971,14 +1098,27 @@ HTML_TEMPLATE = '''
     });
 
     // ========================================
-    // ⭐ VIDEO MANAGEMENT CORREGIDO ⭐
+    // ⭐ TRACKING DE CONVERSIONES OPTIMIZADO ⭐
+    // ========================================
+    function trackConversion(action) {
+        // Google Analytics
+        gtag('event', action, {
+            'event_category': 'cta_clicks',
+            'event_label': action,
+            'transport_type': 'beacon'
+        });
+        
+        console.log('🎯 Conversión tracked:', action);
+    }
+
+    // ========================================
+    // ⭐ VIDEO MANAGEMENT OPTIMIZADO ⭐
     // ========================================
     const heroVideo = document.getElementById('heroVideo');
     
     if (heroVideo) {
         console.log('🎬 Iniciando carga del video...');
         
-        // ⭐ MEJORADO: Múltiples eventos para asegurar que el video cargue ⭐
         heroVideo.addEventListener('loadedmetadata', () => {
             console.log('📹 Video metadata cargado');
             tryPlayVideo();
@@ -989,46 +1129,30 @@ HTML_TEMPLATE = '''
             tryPlayVideo();
         });
         
-        heroVideo.addEventListener('loadeddata', () => {
-            console.log('📊 Video data cargado');
-            tryPlayVideo();
-        });
-        
-        // ⭐ FUNCIÓN MEJORADA PARA REPRODUCIR VIDEO ⭐
         function tryPlayVideo() {
             heroVideo.play()
                 .then(() => {
                     console.log('🎬 Video reproduciéndose correctamente');
                     heroVideo.classList.add('loaded');
                     
-                    // ⭐ TRACKING: Video exitoso ⭐
-                    if (typeof gtag !== 'undefined') {
-                        gtag('event', 'video_play_success', {
-                            'event_category': 'media',
-                            'event_label': 'hero_video'
-                        });
-                    }
+                    // Track video success
+                    gtag('event', 'video_play_success', {
+                        'event_category': 'media',
+                        'event_label': 'hero_video'
+                    });
                 })
                 .catch(error => {
                     console.warn('⚠️ Video no puede reproducirse, usando imagen de fallback:', error);
                     
-                    // ⭐ EL VIDEO SE MANTIENE OCULTO, LA IMAGEN DE FONDO SE MANTIENE VISIBLE ⭐
-                    // No necesitamos cambiar nada porque ya está configurado en CSS
-                    
-                    // ⭐ TRACKING: Video falló ⭐
-                    if (typeof gtag !== 'undefined') {
-                        gtag('event', 'video_play_failed', {
-                            'event_category': 'media',
-                            'event_label': 'hero_video',
-                            'custom_parameters': {
-                                'error': error.name || 'unknown'
-                            }
-                        });
-                    }
+                    // Track video failure
+                    gtag('event', 'video_play_failed', {
+                        'event_category': 'media',
+                        'event_label': 'hero_video'
+                    });
                 });
         }
         
-        // ⭐ OPTIMIZACIÓN: Pausar video cuando no está visible ⭐
+        // Optimización: pausar cuando no visible
         const videoObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1042,13 +1166,11 @@ HTML_TEMPLATE = '''
         }, { threshold: 0.5 });
         
         videoObserver.observe(heroVideo);
-        
-        // ⭐ INTENTAR CARGAR INMEDIATAMENTE ⭐
         heroVideo.load();
     }
     
     // ========================================
-    // SMOOTH SCROLLING Y OTRAS FUNCIONALIDADES
+    // SMOOTH SCROLLING Y FADE IN
     // ========================================
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -1082,28 +1204,10 @@ HTML_TEMPLATE = '''
     
     function openInstagram() {
         window.open('{{ config.instagram_url }}', '_blank');
-        
-        if (typeof gtag !== 'undefined') {
-            gtag('event', 'instagram_click', {
-                'event_category': 'engagement',
-                'event_label': 'style_button'
-            });
-        }
+        trackConversion('instagram_click');
     }
     
-    // ⭐ TRACKING MEJORADO ⭐
-    document.querySelectorAll('a[href*="wa.me"]').forEach(btn => {
-        btn.addEventListener('click', () => {
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'whatsapp_click', {
-                    'event_category': 'conversion',
-                    'event_label': 'contact_button'
-                });
-            }
-        });
-    });
-    
-    console.log('🎨 {{ config.artist_name }} - Landing page CORREGIDA cargada');
+    console.log('🎨 {{ config.artist_name }} - Landing page COMPLETA y OPTIMIZADA cargada');
     console.log('📱 Instagram: {{ config.instagram_handle }}');
     console.log('💬 WhatsApp: {{ config.whatsapp_number }}');
     console.log('🎬 Video URL: {{ config.hero_video }}');
