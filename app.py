@@ -1098,17 +1098,24 @@ HTML_TEMPLATE = '''
     });
 
     // ========================================
-    // ⭐ TRACKING DE CONVERSIONES OPTIMIZADO ⭐
+    // ⭐ TRACKING DE CONVERSIONES CORREGIDO ⭐
     // ========================================
     function trackConversion(action) {
-        // Google Analytics
-        gtag('event', action, {
-            'event_category': 'cta_clicks',
-            'event_label': action,
-            'transport_type': 'beacon'
+        // ⭐ GOOGLE ADS CONVERSION - EVENTO PRINCIPAL ⭐
+        gtag('event', 'conversion', {
+        'send_to': 'AW-17505761615/2a-cCM3m-5IbEM_ysptB',
+        'value': 50000,
+        'currency': 'COP'
         });
-        
-        console.log('🎯 Conversión tracked:', action);
+    
+        // Google Analytics (para estadísticas adicionales)
+        gtag('event', action, {
+        'event_category': 'cta_clicks',
+        'event_label': action,
+        'transport_type': 'beacon'
+        });
+    
+        console.log('🎯 Google Ads Conversion tracked:', action);
     }
 
     // ========================================
