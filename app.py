@@ -1103,7 +1103,8 @@ HTML_TEMPLATE = '''
     function trackConversion(action) {
         // ⭐ GOOGLE ADS CONVERSION - EVENTO PRINCIPAL ⭐
         gtag('event', 'conversion', {
-        'send_to': 'AW-17505761615/2a-cCM3m-5IbEM_ysptB',
+        'send_to': 'AW-17505761615/
+        ZK5dCIPJkZMbEM_ysptB',
         'value': 50000,
         'currency': 'COP'
         });
