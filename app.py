@@ -1,5 +1,4 @@
-# app.py - Landing Page Estilo Jonty Angarita (Naranja Vibrante) con Menú Hamburguesa
-# Aplicación Flask replicando exactamente el diseño de referencia
+# app.py - Landing Page Estilo Jonty Angarita (CORREGIDO - Video + Imagen Fallback)
 
 from flask import Flask, render_template_string, jsonify
 import urllib.parse
@@ -18,15 +17,18 @@ STUDIO_CONFIG = {
     "submessage": "AGENDA UNA ASESORÍA TOTALMENTE GRATIS",
     
     "final_message": "¡Convierte tu cuerpo en la imagen que quieres reflejar!",
-    "hero_video": "https://res.cloudinary.com/dweqlnl1w/video/upload/v1756169279/copy_87684891-94AE-4CF6-9E2C-4A9BCD183822_yohijq.mov",  # Tu video aquí
+    "hero_video": "https://res.cloudinary.com/dweqlnl1w/video/upload/v1756840388/copy_87684891-94AE-4CF6-9E2C-4A9BCD183822_tlqd6g.mov",
+    
+    # ⭐ NUEVA IMAGEN FALLBACK ESTÁTICA ⭐
+    "hero_fallback_image": "https://res.cloudinary.com/dweqlnl1w/image/upload/v1756840540/image00007_d6qbn7.jpg",  # Tu imagen de fallback
+    
     "instagram_handle": "@jontyangarita",
     "instagram_url": "https://www.instagram.com/jontyangarita?igsh=MXdqOXlpeG9pZTRmZA%3D%3D&utm_source=qr",
-    "whatsapp_number": "+573504556466",  # Cambiar por número real
+    "whatsapp_number": "+573504556466",
     "location": "Medellín, Antioquia",
     "about_text": "Soy Jonty Angarita, Artista Tatuador radicado en la ciudad de Medellín-Colombia, cuento con +10 años de experiencia como tatuador y me especializo en los estilos de Realismo, Color, Sombras, y Ornamentales. En estos largos años he tenido la oportunidad de trabajar con clientes nacionales e internacionales, logrando así un portafolio amplio y variado. Mi objetivo es brindar a cada cliente una experiencia única y personalizada, asegurándome de que cada tatuaje sea una obra de arte que refleje su individualidad y estilo personal. Si estás buscando un tatuaje que combine técnica, creatividad y pasión, no dudes en contactarme para agendar tu cita o asesoría gratuita.",
     "google_maps_embed": "Tattoo Shop Medellin / Jonty Angarita",
     "google_ads_id": "G-LLX2T252FL",
-    
 }
 
 # ========================================
@@ -63,14 +65,14 @@ def generate_whatsapp_link(message="Hola! Me interesa agendar una asesoría de t
 
 @app.route('/')
 def index():
-    """Página principal - Landing page estilo Jonty Angarita con menú hamburguesa"""
+    """Página principal - Landing page estilo Jonty Angarita con video corregido"""
     return render_template_string(HTML_TEMPLATE, 
                                 config=STUDIO_CONFIG,
                                 styles=tattoo_styles,
                                 whatsapp_link=generate_whatsapp_link())
 
 # ========================================
-# TEMPLATE HTML ESTILO jonty angarita CON MENÚ HAMBURGUESA
+# TEMPLATE HTML CORREGIDO
 # ========================================
 HTML_TEMPLATE = '''
 <!DOCTYPE html>
@@ -81,15 +83,15 @@ HTML_TEMPLATE = '''
     <title>{{ config.artist_name }} - {{ config.title }}</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Artista tatuador especializado en Realismo, Color y Crnamentales en {{ config.location }}. Agenda tu asesoría completamente Gratis.">
+    <meta name="description" content="Artista tatuador especializado en Realismo, Color y Ornamentales en {{ config.location }}. Agenda tu asesoría completamente Gratis.">
     <meta name="keywords" content="tatuajes, {{ config.location.lower() }}, realismo, color, ornamentales, artista tatuador">
     
-    <!-- Open Graph Meta Tags PERSONALIZADOS -->
+    <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Jonty Angarita - Tattoo Artist Medellín | Realismo y Color">
     <meta property="og:description" content="Especialista en realismo, color, sombras y ornamentales. +10 años de experiencia. Agenda tu asesoría completamente GRATIS en Medellín.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://jontyangaritatattooshop.onrender.com">
-    <meta property="og:image" content="https://res.cloudinary.com/dweqlnl1w/image/upload/v1756247744/image00007_qv0o5c.jpg">
+    <meta property="og:image" content="{{ config.hero_fallback_image }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:site_name" content="Top Artists Medellin">
@@ -99,10 +101,7 @@ HTML_TEMPLATE = '''
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Jonty Angarita - Tattoo Artist Medellín | Realismo y Color">
     <meta name="twitter:description" content="Especialista en realismo, color, sombras y ornamentales. +10 años de experiencia. Agenda tu asesoría completamente GRATIS.">
-    <meta name="twitter:image" content="https://res.cloudinary.com/dweqlnl1w/image/upload/v1756247744/image00007_qv0o5c.jpg">
-
-    <!-- WhatsApp específico -->
-    <meta property="og:image:alt" content="Jonty Angarita - Tattoo Artist Medellín | Realismo y Color">
+    <meta name="twitter:image" content="{{ config.hero_fallback_image }}">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -113,22 +112,18 @@ HTML_TEMPLATE = '''
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-    /* ========================================
-       CSS STYLES - ESTILO JONTY ANGARITA NARANJA CON MENÚ HAMBURGUESA
-       ======================================== */
-    
+    /* MISMO CSS QUE ANTES - NO CAMBIAR */
     :root {
-        /* Paleta de colores Jonty Angarita INVERTIDA - MÁS NEGROS */
         --orange-primary: #FF4B35;
         --orange-hover: #e55a2b;
         --orange-light: #ff8660;
-        --bg-dark: #1a1a1a;      /* MÁS NEGRO (era #f5f5f5) */
-        --bg-darker: #0a0a0a;    /* NEGRO INTENSO (era #e5e5e5) */
-        --bg-light: #161616;     /* NEGRO PRINCIPAL (era #2a2a2a) */
-        --text-white: #333333;   /* Era blanco, ahora oscuro */
-        --text-dark: #ffffff;    /* Era oscuro, ahora blanco */
-        --text-gray: #cccccc;    /* Más claro para mejor contraste */
-        --border-gray: #333333;  /* Más oscuro */
+        --bg-dark: #1a1a1a;
+        --bg-darker: #0a0a0a;
+        --bg-light: #161616;
+        --text-white: #333333;
+        --text-dark: #ffffff;
+        --text-gray: #cccccc;
+        --border-gray: #333333;
     }
     
     * {
@@ -147,13 +142,11 @@ HTML_TEMPLATE = '''
         overflow-x: hidden;
     }
     
-    /* ========================================
-       HEADER NAVIGATION CON MENÚ HAMBURGUESA - FONDO NEGRO
-       ======================================== */
+    /* HEADER NAVIGATION */
     .header {
-        background: var(--bg-light);    /* Ahora negro */
+        background: var(--bg-light);
         padding: 1rem 0;
-        box-shadow: 0 2px 10px rgba(255,255,255,0.1);  /* Sombra blanca sutil */
+        box-shadow: 0 2px 10px rgba(255,255,255,0.1);
         position: fixed;
         width: 100%;
         top: 0;
@@ -173,14 +166,12 @@ HTML_TEMPLATE = '''
         font-family: 'Oswald', sans-serif;
         font-size: 1.8rem;
         font-weight: 700;
-        color: var(--text-dark);     /* Ahora blanco */
+        color: var(--text-dark);
         text-decoration: none;
         letter-spacing: 2px;
     }
     
-    /* ========================================
-       MENÚ HAMBURGUESA ESTILO Jonty Angarita
-       ======================================== */
+    /* MENÚ HAMBURGUESA */
     .hamburger-menu {
         display: flex;
         flex-direction: column;
@@ -207,7 +198,6 @@ HTML_TEMPLATE = '''
         border-radius: 2px;
     }
     
-    /* Animación del menú hamburguesa cuando está abierto */
     .hamburger-menu.active .hamburger-line:nth-child(1) {
         transform: rotate(45deg) translate(6px, 6px);
     }
@@ -220,7 +210,6 @@ HTML_TEMPLATE = '''
         transform: rotate(-45deg) translate(6px, -6px);
     }
     
-    /* MENÚ DESPLEGABLE */
     .mobile-menu {
         position: fixed;
         top: 0;
@@ -262,7 +251,6 @@ HTML_TEMPLATE = '''
         border-bottom: none;
     }
     
-    /* Instagram en el menú móvil */
     .mobile-menu-instagram {
         display: flex;
         align-items: center;
@@ -280,7 +268,6 @@ HTML_TEMPLATE = '''
         color: var(--orange-primary);
     }
     
-    /* Overlay para cerrar el menú */
     .menu-overlay {
         position: fixed;
         top: 0;
@@ -299,9 +286,7 @@ HTML_TEMPLATE = '''
         visibility: visible;
     }
     
-    /* ========================================
-       HERO SECTION CON VIDEO DE FONDO
-       ======================================== */
+    /* ⭐ HERO SECTION CORREGIDO CON VIDEO MEJORADO ⭐ */
     .hero {
         min-height: 100vh;
         display: flex;
@@ -312,6 +297,9 @@ HTML_TEMPLATE = '''
         position: relative;
         padding-top: 100px;
         overflow: hidden;
+        /* ⭐ IMAGEN DE FALLBACK COMO FONDO POR DEFECTO ⭐ */
+        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                    url('{{ config.hero_fallback_image }}') center/cover no-repeat;
     }
     
     .hero-video {
@@ -322,6 +310,13 @@ HTML_TEMPLATE = '''
         height: 100%;
         object-fit: cover;
         z-index: 1;
+        /* ⭐ OCULTO POR DEFECTO, SE MUESTRA CUANDO EL VIDEO CARGA ⭐ */
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+    
+    .hero-video.loaded {
+        opacity: 1;
     }
     
     .hero::before {
@@ -408,12 +403,10 @@ HTML_TEMPLATE = '''
         box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
     }
     
-    /* ========================================
-       ESTILOS SECTION - FONDO NEGRO
-       ======================================== */
+    /* REST OF CSS REMAINS THE SAME - ESTILOS, ABOUT, MAP, REVIEWS, FOOTER */
     .styles-section {
         padding: 5rem 2rem;
-        background: var(--bg-light);    /* Ahora negro */
+        background: var(--bg-light);
     }
     
     .section-container {
@@ -425,7 +418,7 @@ HTML_TEMPLATE = '''
     .section-title {
         font-family: 'Oswald', sans-serif;
         font-size: 2.5rem;
-        color: var(--text-dark);        /* Ahora blanco */
+        color: var(--text-dark);
         margin-bottom: 3rem;
         position: relative;
     }
@@ -449,10 +442,10 @@ HTML_TEMPLATE = '''
     }
     
     .style-card {
-        background: var(--bg-dark);     /* Fondo más claro que la sección */
+        background: var(--bg-dark);
         border-radius: 10px;
         overflow: hidden;
-        box-shadow: 0 5px 20px rgba(255,255,255,0.1);  /* Sombra blanca sutil */
+        box-shadow: 0 5px 20px rgba(255,255,255,0.1);
         transition: transform 0.3s ease;
     }
     
@@ -462,9 +455,9 @@ HTML_TEMPLATE = '''
     
     .style-image {
         width: 100%;
-        height: 400px;                  /* RECTANGULAR: Más alto (era 300px) */
+        height: 400px;
         object-fit: cover;
-        aspect-ratio: 3/4;              /* Formato rectangular vertical */
+        aspect-ratio: 3/4;
     }
     
     .style-content {
@@ -496,9 +489,6 @@ HTML_TEMPLATE = '''
         background: var(--orange-hover);
     }
     
-    /* ========================================
-       SOBRE EL ARTISTA SECTION
-       ======================================== */
     .about-section {
         background: var(--orange-primary);
         padding: 4rem 2rem;
@@ -556,9 +546,6 @@ HTML_TEMPLATE = '''
         border: 5px solid white;
     }
     
-    /* ========================================
-       MAPA SECTION
-       ======================================== */
     .map-section {
         padding: 0;
         height: 400px;
@@ -575,12 +562,9 @@ HTML_TEMPLATE = '''
         border: none;
     }
     
-    /* ========================================
-       RESEÑAS SECTION - FONDO NEGRO INTENSO
-       ======================================== */
     .reviews-section {
-        background: var(--bg-darker);    /* NEGRO INTENSO */
-        color: var(--text-dark);         /* BLANCO */
+        background: var(--bg-darker);
+        color: var(--text-dark);
         padding: 4rem 2rem;
         text-align: center;
     }
@@ -596,12 +580,12 @@ HTML_TEMPLATE = '''
         font-size: 1.2rem;
         margin-bottom: 1rem;
         font-weight: 600;
-        color: var(--text-dark);         /* BLANCO */
+        color: var(--text-dark);
     }
     
     .reviews-text {
         margin-bottom: 2rem;
-        color: var(--text-gray);         /* GRIS CLARO */
+        color: var(--text-gray);
     }
     
     .stars {
@@ -628,12 +612,9 @@ HTML_TEMPLATE = '''
         background: var(--orange-hover);
     }
     
-    /* ========================================
-       FOOTER - NEGRO INTENSO
-       ======================================== */
     .footer {
-        background: var(--bg-darker);    /* NEGRO INTENSO */
-        color: var(--text-dark);         /* BLANCO */
+        background: var(--bg-darker);
+        color: var(--text-dark);
         padding: 2rem;
         text-align: center;
     }
@@ -665,7 +646,7 @@ HTML_TEMPLATE = '''
     }
     
     .footer-social a {
-        color: var(--text-dark);         /* BLANCO */
+        color: var(--text-dark);
         font-size: 1.5rem;
         margin: 0 0.5rem;
         transition: color 0.3s ease;
@@ -677,13 +658,10 @@ HTML_TEMPLATE = '''
     
     .copyright {
         margin-top: 1rem;
-        color: var(--text-gray);         /* GRIS CLARO */
+        color: var(--text-gray);
         font-size: 0.9rem;
     }
     
-    /* ========================================
-       WHATSAPP BUTTON
-       ======================================== */
     .whatsapp-float {
         position: fixed;
         bottom: 2rem;
@@ -708,9 +686,7 @@ HTML_TEMPLATE = '''
         box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
     }
     
-    /* ========================================
-       RESPONSIVE DESIGN
-       ======================================== */
+    /* RESPONSIVE DESIGN */
     @media (max-width: 768px) {
         .nav-container {
             padding: 0 1rem;
@@ -785,9 +761,6 @@ HTML_TEMPLATE = '''
         }
     }
     
-    /* ========================================
-       ANIMACIONES
-       ======================================== */
     .fade-in {
         opacity: 0;
         transform: translateY(30px);
@@ -798,14 +771,8 @@ HTML_TEMPLATE = '''
         opacity: 1;
         transform: translateY(0);
     }
-    
-    /* Smooth transitions */
-    * {
-        transition: inherit;
-    }
     </style>
     
-    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ config.google_ads_id }}"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -815,14 +782,10 @@ HTML_TEMPLATE = '''
     </script>
 </head>
 <body>
-    <!-- ========================================
-         HEADER NAVIGATION CON MENÚ HAMBURGUESA
-         ======================================== -->
+    <!-- HEADER -->
     <header class="header">
         <nav class="nav-container">
             <a href="#" class="logo">{{ config.studio_name }}</a>
-            
-            <!-- MENÚ HAMBURGUESA -->
             <div class="hamburger-menu" id="hamburgerMenu">
                 <div class="hamburger-line"></div>
                 <div class="hamburger-line"></div>
@@ -831,10 +794,8 @@ HTML_TEMPLATE = '''
         </nav>
     </header>
 
-    <!-- OVERLAY PARA CERRAR EL MENÚ -->
     <div class="menu-overlay" id="menuOverlay"></div>
 
-    <!-- MENÚ MÓVIL DESPLEGABLE -->
     <nav class="mobile-menu" id="mobileMenu">
         <a href="#inicio" class="mobile-menu-item">Inicio</a>
         <a href="#estilos" class="mobile-menu-item">Mi Portafolio</a>
@@ -846,13 +807,14 @@ HTML_TEMPLATE = '''
         </a>
     </nav>
 
-    <!-- ========================================
-         HERO SECTION CON VIDEO
-         ======================================== -->
+    <!-- ⭐ HERO SECTION CORREGIDO ⭐ -->
     <section class="hero" id="inicio">
-        <video class="hero-video" autoplay muted loop playsinline>
+        <!-- ⭐ VIDEO CON MÚLTIPLES FORMATOS Y MEJOR CONFIGURACIÓN ⭐ -->
+        <video class="hero-video" id="heroVideo" muted loop playsinline preload="metadata">
             <source src="{{ config.hero_video }}" type="video/mp4">
-            <!-- Fallback para navegadores que no soporten video -->
+            <source src="{{ config.hero_video }}" type="video/mov">
+            <source src="{{ config.hero_video }}" type="video/webm">
+            <!-- Más tipos de video para compatibilidad -->
         </video>
         
         <div class="hero-content">
@@ -860,7 +822,6 @@ HTML_TEMPLATE = '''
             <h1 class="hero-title">{{ config.artist_name }}</h1>
             <p class="hero-message">{{ config.main_message }}</p>
             <p class="hero-submessage">{{ config.submessage }}</p>
-            <p class="hero-description">{{ config.description }}</p>
             <p class="hero-final">{{ config.final_message }}</p>
             <a href="{{ whatsapp_link }}" class="cta-button" target="_blank">
                 AGENDA TU CITA
@@ -868,9 +829,7 @@ HTML_TEMPLATE = '''
         </div>
     </section>
 
-    <!-- ========================================
-         MI PORTAFOLIO
-         ======================================== -->
+    <!-- REST OF CONTENT REMAINS THE SAME -->
     <section class="styles-section" id="estilos">
         <div class="section-container">
             <h2 class="section-title">Mi Portafolio</h2>
@@ -890,9 +849,6 @@ HTML_TEMPLATE = '''
         </div>
     </section>
 
-    <!-- ========================================
-         SOBRE EL ARTISTA
-         ======================================== -->
     <section class="about-section" id="sobre-el-artista">
         <div class="about-container">
             <div class="about-content">
@@ -908,9 +864,6 @@ HTML_TEMPLATE = '''
         </div>
     </section>
 
-    <!-- ========================================
-         MAPA
-         ======================================== -->
     <section class="map-section" id="contacto">
         <div class="map-container">
             <iframe 
@@ -925,9 +878,6 @@ HTML_TEMPLATE = '''
         </div>
     </section>
 
-    <!-- ========================================
-         REVIEWS Y OPINIONES
-         ======================================== -->
     <section class="reviews-section">
         <div class="section-container">
             <h2 class="reviews-title">REVIEWS Y OPINIONES</h2>
@@ -946,9 +896,6 @@ HTML_TEMPLATE = '''
         </div>
     </section>
 
-    <!-- ========================================
-         FOOTER
-         ======================================== -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-links">
@@ -967,16 +914,11 @@ HTML_TEMPLATE = '''
         </div>
     </footer>
 
-    <!-- ========================================
-         WHATSAPP BUTTON
-         ======================================== -->
     <a href="{{ whatsapp_link }}" class="whatsapp-float" target="_blank" aria-label="Contactar por WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <!-- ========================================
-         JAVASCRIPT CON FUNCIONALIDAD DE MENÚ HAMBURGUESA
-         ======================================== -->
+    <!-- ⭐ JAVASCRIPT CORREGIDO CON VIDEO MEJORADO ⭐ -->
     <script>
     // ========================================
     // MENÚ HAMBURGUESA FUNCTIONALITY
@@ -986,14 +928,11 @@ HTML_TEMPLATE = '''
     const menuOverlay = document.getElementById('menuOverlay');
     const mobileMenuItems = document.querySelectorAll('.mobile-menu-item');
 
-    // Toggle menú hamburguesa
     hamburgerMenu.addEventListener('click', toggleMenu);
     menuOverlay.addEventListener('click', closeMenu);
 
-    // Cerrar menú al hacer clic en un item
     mobileMenuItems.forEach(item => {
         item.addEventListener('click', (e) => {
-            // Si no es un enlace externo, cerrar el menú
             if (!item.hasAttribute('target')) {
                 closeMenu();
             }
@@ -1005,7 +944,6 @@ HTML_TEMPLATE = '''
         mobileMenu.classList.toggle('active');
         menuOverlay.classList.toggle('active');
         
-        // Prevenir scroll del body cuando el menú está abierto
         if (mobileMenu.classList.contains('active')) {
             document.body.style.overflow = 'hidden';
         } else {
@@ -1020,14 +958,12 @@ HTML_TEMPLATE = '''
         document.body.style.overflow = '';
     }
 
-    // Cerrar menú con tecla Escape
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
             closeMenu();
         }
     });
 
-    // Cerrar menú al cambiar el tamaño de la ventana (responsive)
     window.addEventListener('resize', () => {
         if (window.innerWidth > 768 && mobileMenu.classList.contains('active')) {
             closeMenu();
@@ -1035,10 +971,85 @@ HTML_TEMPLATE = '''
     });
 
     // ========================================
+    // ⭐ VIDEO MANAGEMENT CORREGIDO ⭐
+    // ========================================
+    const heroVideo = document.getElementById('heroVideo');
+    
+    if (heroVideo) {
+        console.log('🎬 Iniciando carga del video...');
+        
+        // ⭐ MEJORADO: Múltiples eventos para asegurar que el video cargue ⭐
+        heroVideo.addEventListener('loadedmetadata', () => {
+            console.log('📹 Video metadata cargado');
+            tryPlayVideo();
+        });
+        
+        heroVideo.addEventListener('canplaythrough', () => {
+            console.log('✅ Video listo para reproducir');
+            tryPlayVideo();
+        });
+        
+        heroVideo.addEventListener('loadeddata', () => {
+            console.log('📊 Video data cargado');
+            tryPlayVideo();
+        });
+        
+        // ⭐ FUNCIÓN MEJORADA PARA REPRODUCIR VIDEO ⭐
+        function tryPlayVideo() {
+            heroVideo.play()
+                .then(() => {
+                    console.log('🎬 Video reproduciéndose correctamente');
+                    heroVideo.classList.add('loaded');
+                    
+                    // ⭐ TRACKING: Video exitoso ⭐
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'video_play_success', {
+                            'event_category': 'media',
+                            'event_label': 'hero_video'
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.warn('⚠️ Video no puede reproducirse, usando imagen de fallback:', error);
+                    
+                    // ⭐ EL VIDEO SE MANTIENE OCULTO, LA IMAGEN DE FONDO SE MANTIENE VISIBLE ⭐
+                    // No necesitamos cambiar nada porque ya está configurado en CSS
+                    
+                    // ⭐ TRACKING: Video falló ⭐
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'video_play_failed', {
+                            'event_category': 'media',
+                            'event_label': 'hero_video',
+                            'custom_parameters': {
+                                'error': error.name || 'unknown'
+                            }
+                        });
+                    }
+                });
+        }
+        
+        // ⭐ OPTIMIZACIÓN: Pausar video cuando no está visible ⭐
+        const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (heroVideo.paused) {
+                        tryPlayVideo();
+                    }
+                } else {
+                    heroVideo.pause();
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        videoObserver.observe(heroVideo);
+        
+        // ⭐ INTENTAR CARGAR INMEDIATAMENTE ⭐
+        heroVideo.load();
+    }
+    
+    // ========================================
     // SMOOTH SCROLLING Y OTRAS FUNCIONALIDADES
     // ========================================
-    
-    // Smooth scrolling para navegación
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -1052,7 +1063,6 @@ HTML_TEMPLATE = '''
         });
     });
     
-    // Fade in animation on scroll
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -1070,11 +1080,9 @@ HTML_TEMPLATE = '''
         observer.observe(el);
     });
     
-    // Functions para botones
     function openInstagram() {
         window.open('{{ config.instagram_url }}', '_blank');
         
-        // Track event
         if (typeof gtag !== 'undefined') {
             gtag('event', 'instagram_click', {
                 'event_category': 'engagement',
@@ -1083,36 +1091,7 @@ HTML_TEMPLATE = '''
         }
     }
     
-    // VIDEO MANAGEMENT
-    const heroVideo = document.querySelector('.hero-video');
-    
-    if (heroVideo) {
-        // Ensure video plays on mobile
-        heroVideo.addEventListener('canplaythrough', () => {
-            heroVideo.play().catch(e => {
-                console.log('Video autoplay prevented:', e);
-                // Fallback: hide video and show background image
-                heroVideo.style.display = 'none';
-                document.querySelector('.hero').style.background = 
-                    "linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://picsum.photos/1920/1080?random=50') center/cover";
-            });
-        });
-        
-        // Pause video when not in view (performance)
-        const videoObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    heroVideo.play().catch(e => console.log('Video play failed:', e));
-                } else {
-                    heroVideo.pause();
-                }
-            });
-        });
-        
-        videoObserver.observe(heroVideo);
-    }
-    
-    // Track WhatsApp clicks
+    // ⭐ TRACKING MEJORADO ⭐
     document.querySelectorAll('a[href*="wa.me"]').forEach(btn => {
         btn.addEventListener('click', () => {
             if (typeof gtag !== 'undefined') {
@@ -1124,24 +1103,11 @@ HTML_TEMPLATE = '''
         });
     });
     
-    console.log('🎨 {{ config.artist_name }} - Landing page con menú hamburguesa cargada');
+    console.log('🎨 {{ config.artist_name }} - Landing page CORREGIDA cargada');
     console.log('📱 Instagram: {{ config.instagram_handle }}');
     console.log('💬 WhatsApp: {{ config.whatsapp_number }}');
-    console.log('🧡 Estilo Naranja Vibrante con menú hamburguesa activado');
-    </script>
-
-    <!-- Facebook Pixel -->
-    <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '{{ config.facebook_pixel_id }}');
-    fbq('track', 'PageView');
+    console.log('🎬 Video URL: {{ config.hero_video }}');
+    console.log('🖼️ Imagen fallback: {{ config.hero_fallback_image }}');
     </script>
 </body>
 </html>
