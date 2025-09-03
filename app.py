@@ -297,7 +297,7 @@ HTML_TEMPLATE = '''
         position: relative;
         padding-top: 100px;
         overflow: hidden;
-        /* ⭐ IMAGEN DE FALLBACK COMO FONDO POR DEFECTO ⭐ */
+        /* ⭐ IMAGEN DE FONDO COMO FALLBACK ⭐ */
         background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
                     url('{{ config.hero_fallback_image }}') center/cover no-repeat;
     }
@@ -773,12 +773,32 @@ HTML_TEMPLATE = '''
     }
     </style>
     
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ config.google_ads_id }}"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', '{{ config.google_ads_id }}');
+    </script>
+    
+    <!-- Google tag (gtag.js) event - delayed navigation helper -->
+    <script>
+      // Helper function to delay opening a URL until a gtag event is sent.
+      // Call it in response to an action that should navigate to a URL.
+      function gtagSendEvent(url) {
+        var callback = function () {
+          if (typeof url === 'string') {
+            window.location = url;
+          }
+        };
+        gtag('event', 'whatsapp_float', {
+          'event_callback': callback,
+          'event_timeout': 2000,
+          // <event_parameters>
+        });
+        return false;
+      }
     </script>
 </head>
 <body>
@@ -823,7 +843,7 @@ HTML_TEMPLATE = '''
             <p class="hero-message">{{ config.main_message }}</p>
             <p class="hero-submessage">{{ config.submessage }}</p>
             <p class="hero-final">{{ config.final_message }}</p>
-            <a href="{{ whatsapp_link }}" class="cta-button" target="_blank">
+            <a href="{{ whatsapp_link }}" class="cta-button" target="_blank" onclick="return gtagSendEvent('{{ whatsapp_link }}')">
                 AGENDA TU CITA
             </a>
         </div>
@@ -914,7 +934,7 @@ HTML_TEMPLATE = '''
         </div>
     </footer>
 
-    <a href="{{ whatsapp_link }}" class="whatsapp-float" target="_blank" aria-label="Contactar por WhatsApp">
+    <a href="{{ whatsapp_link }}" class="whatsapp-float" target="_blank" aria-label="Contactar por WhatsApp" onclick="return gtagSendEvent('{{ whatsapp_link }}')">
         <i class="fab fa-whatsapp"></i>
     </a>
 
