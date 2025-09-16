@@ -1,4 +1,4 @@
-# app.py - Landing Page Estilo Jonty Angarita (CORREGIDO - Video + Imagen Fallback)
+# app.py - Landing Page Estilo Jonti Angarita (CORREGIDO - Video + Imagen Fallback)
 
 from flask import Flask, render_template_string, jsonify
 import urllib.parse
@@ -11,7 +11,7 @@ app = Flask(__name__)
 # ========================================
 STUDIO_CONFIG = {
     "studio_name": "Certified Tattoo Studio",
-    "artist_name": "Jonty  Angarita",
+    "artist_name": "Jonti  Angarita",
     "title": "TATTOO ARTIST",
     "main_message": "¿Deseas tatuarte y estás en Medellín?",
     "submessage": "AGENDA UNA ASESORÍA TOTALMENTE GRATIS",
@@ -22,12 +22,12 @@ STUDIO_CONFIG = {
     # ⭐ NUEVA IMAGEN FALLBACK ESTÁTICA ⭐
     "hero_fallback_image": "https://res.cloudinary.com/dweqlnl1w/image/upload/v1756840540/image00007_d6qbn7.jpg",  # Tu imagen de fallback
     
-    "instagram_handle": "@jontyangarita",
-    "instagram_url": "https://www.instagram.com/jontyangarita?igsh=MXdqOXlpeG9pZTRmZA%3D%3D&utm_source=qr",
+    "instagram_handle": "@jontiangarita",
+    "instagram_url": "https://www.instagram.com/jontiangarita?igsh=MXdqOXlpeG9pZTRmZA%3D%3D&utm_source=qr",
     "whatsapp_number": "+573504556466",
     "location": "Medellín, Antioquia",
-    "about_text": "Soy Jonty Angarita, Artista Tatuador radicado en la ciudad de Medellín-Colombia, cuento con +10 años de experiencia como tatuador y me especializo en los estilos de Realismo, Color, Sombras, y Ornamentales. En estos largos años he tenido la oportunidad de trabajar con clientes nacionales e internacionales, logrando así un portafolio amplio y variado. Mi objetivo es brindar a cada cliente una experiencia única y personalizada, asegurándome de que cada tatuaje sea una obra de arte que refleje su individualidad y estilo personal. Si estás buscando un tatuaje que combine técnica, creatividad y pasión, no dudes en contactarme para agendar tu cita o asesoría gratuita.",
-    "google_maps_embed": "Tattoo Shop Medellin / Jonty Angarita",
+    "about_text": "Soy Jonti Angarita, Artista Tatuador radicado en la ciudad de Medellín-Colombia, cuento con +10 años de experiencia como tatuador y me especializo en los estilos de Realismo, Color, Sombras, y Ornamentales. En estos largos años he tenido la oportunidad de trabajar con clientes nacionales e internacionales, logrando así un portafolio amplio y variado. Mi objetivo es brindar a cada cliente una experiencia única y personalizada, asegurándome de que cada tatuaje sea una obra de arte que refleje su individualidad y estilo personal. Si estás buscando un tatuaje que combine técnica, creatividad y pasión, no dudes en contactarme para agendar tu cita o asesoría gratuita.",
+    "google_maps_embed": "Tattoo Shop Medellin / Jonti Angarita",
     "google_ads_id": "G-LLX2T252FL",
 }
 
@@ -65,7 +65,7 @@ def generate_whatsapp_link(message="Hola! Me interesa agendar una asesoría de t
 
 @app.route('/')
 def index():
-    """Página principal - Landing page estilo Jonty Angarita con video corregido"""
+    """Página principal - Landing page estilo Jonti Angarita con video corregido"""
     return render_template_string(HTML_TEMPLATE, 
                                 config=STUDIO_CONFIG,
                                 styles=tattoo_styles,
@@ -87,10 +87,10 @@ HTML_TEMPLATE = '''
     <meta name="keywords" content="tatuajes, {{ config.location.lower() }}, realismo, color, ornamentales, artista tatuador">
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Jonty Angarita - Tattoo Artist Medellín | Realismo y Color">
+    <meta property="og:title" content="Jonti Angarita - Tattoo Artist Medellín | Realismo y Color">
     <meta property="og:description" content="Especialista en realismo, color, sombras y ornamentales. +10 años de experiencia. Agenda tu asesoría completamente GRATIS en Medellín.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://jontyangaritatattooshop.onrender.com">
+    <meta property="og:url" content="https://jontiangaritatattooshop.onrender.com">
     <meta property="og:image" content="{{ config.hero_fallback_image }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -99,7 +99,7 @@ HTML_TEMPLATE = '''
 
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Jonty Angarita - Tattoo Artist Medellín | Realismo y Color">
+    <meta name="twitter:title" content="Jonti Angarita - Tattoo Artist Medellín | Realismo y Color">
     <meta name="twitter:description" content="Especialista en realismo, color, sombras y ornamentales. +10 años de experiencia. Agenda tu asesoría completamente GRATIS.">
     <meta name="twitter:image" content="{{ config.hero_fallback_image }}">
     
@@ -887,7 +887,7 @@ HTML_TEMPLATE = '''
     <section class="map-section" id="contacto">
         <div class="map-container">
             <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d991.5145179063718!2d-75.58418833048293!3d6.256080432726896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e4429d888310d0b%3A0x21d15470e7091326!2sTattoo%20Shop%20Medellin%20%2F%20Jonty%20Angarita!5e0!3m2!1sen!2sco!4v1756185107388!5m2!1sen!2sco"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d991.5145179063718!2d-75.58418833048293!3d6.256080432726896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e4429d888310d0b%3A0x21d15470e7091326!2sTattoo%20Shop%20Medellin%20%2F%20Jonti%20Angarita!5e0!3m2!1sen!2sco!4v1756185107388!5m2!1sen!2sco"
                 width="100%" 
                 height="100%" 
                 style="border:0;" 
